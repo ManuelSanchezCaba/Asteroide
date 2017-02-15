@@ -73,6 +73,9 @@ namespace Engine
 		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
+		Load config;
+		Ship = config.load();
+
 		return true;
 	}
 
@@ -80,6 +83,18 @@ namespace Engine
 	{		
 		switch (keyBoardEvent.keysym.scancode)
 		{
+		case SDL_SCANCODE_W:
+			Ship[Index].MoveUp();
+			break;
+		case SDL_SCANCODE_P:
+			Index++;
+			if (Index > (Ship.size() - 1))
+			{
+				Index = 0;
+			}
+
+			std::cout << Index << std::endl;
+			break;
 		default:			
 			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
 			break;
@@ -127,12 +142,8 @@ namespace Engine
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_LINE_LOOP);
-		glVertex2f(50.0, 50.0);
-		glVertex2f(50.0, -50.0);
-		glVertex2f(-50.0, -50.0);
-		glVertex2f(-50.0, 50.0);
-		glEnd();
+		//Ship[Index]->Draw();
+		Ship[Index].Draw();
 
 		SDL_GL_SwapWindow(m_mainWindow);
 	}

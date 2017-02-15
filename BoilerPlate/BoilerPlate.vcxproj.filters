@@ -6,6 +6,10 @@
     <ClCompile Include="SDLEvent.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="stb_image.c" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="ship.cpp" />
+    <ClCompile Include="Load.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
@@ -13,6 +17,9 @@
     <ClInclude Include="TimeManager.hpp" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="utilities.hpp" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="ship.h" />
+    <ClInclude Include="Load.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

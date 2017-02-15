@@ -10,6 +10,7 @@
 // 
 #include "App.hpp"
 #include "utilities.hpp"
+#include "ship.h"
 
 const int WIDTH = 1136;
 const int HEIGHT = 640;
@@ -18,8 +19,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	utilities file;
-	file.explore((char *)"Models");
 	
 #if _MSC_VER && _DEBUG
 	// https://msdn.microsoft.com/en-us/library/x98tx3cf.aspx

@@ -172,17 +172,24 @@ copy /Y "$(SolutionDir)\Externals\SDL2-2.0.4\lib\x64\SDL2.dll" "$(TargetDir)SDL2
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDLEvent.cpp" />
+    <ClCompile Include="ship.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
     <ClInclude Include="dirent.h" />
+    <ClInclude Include="Load.h" />
     <ClInclude Include="SDLEvent.hpp" />
+    <ClInclude Include="ship.h" />
     <ClInclude Include="TimeManager.hpp" />
     <ClInclude Include="utilities.hpp" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

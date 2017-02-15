@@ -5,10 +5,13 @@
 // C++ STL
 #include <string>
 #include <list>
+#include <vector>
 
 // Asteroids
 #include "SDLEvent.hpp"
 #include "TimeManager.hpp"
+#include "ship.h"
+#include "Load.h"
 
 namespace Engine
 {
@@ -67,6 +70,8 @@ namespace Engine
 		GameState::State					m_state;
 		Engine::TimeManager*				m_timer;
 
+		int Index;
+		std::vector<ship> Ship;
 	};
 }
 #endif /* GAME_HPP */
