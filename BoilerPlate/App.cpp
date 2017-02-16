@@ -86,6 +86,15 @@ namespace Engine
 		case SDL_SCANCODE_W:
 			Ship[Index].MoveUp();
 			break;
+		case SDL_SCANCODE_S:
+			Ship[Index].MoveUp();
+			break;
+		case SDL_SCANCODE_A:
+			Ship[Index].MoveUp();
+			break;
+		case SDL_SCANCODE_D:
+			Ship[Index].MoveUp();
+			break;
 		case SDL_SCANCODE_P:
 			Index++;
 			if (Index > (Ship.size() - 1))

@@ -70,7 +70,7 @@ namespace Engine
 		GameState::State					m_state;
 		Engine::TimeManager*				m_timer;
 
-		int Index;
+		int Index = 0;
 		std::vector<ship> Ship;
 	};
 }
