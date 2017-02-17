@@ -1,6 +1,9 @@
 #include "ship.h"
 #include <SDL2/SDL_opengl.h>
+#include <cmath>
+#define PI 3.141592653
 
+const float anguloAjuste = 90.0f;
 
 ship::ship()
 {}
@@ -12,6 +15,14 @@ ship::ship(const vector<Vector2> points)
 
 void ship::Draw()
 {
+	glLoadIdentity();
+
+	glTranslatef(Position.GetX(),Position.GetY(), 0.0f);
+
+	glRotatef(angulo, 0.0f, 0.0f, 1.0f);
+
+	cout << angulo << endl;
+
 	glBegin(GL_LINE_LOOP);
 		for (auto point : Point)
 		{
@@ -20,38 +31,36 @@ void ship::Draw()
 	glEnd();
 }
 
-void ship::Move(int x, int y)
+void ship::Trasladar(Vector2 position)
 {
-	HANDLE hCon; //Puntero que me ayuda a controlar el sistema
-	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos; //Definir Coordenadas
-	dwPos.X = x;
-	dwPos.Y = y;
-	CONSOLE_CURSOR_INFO cc; //Esto hace que pueda modificar el cursor
-	cc.bVisible = FALSE; //Hago que desaparezca el cursor
-
-	SetConsoleCursorPosition(hCon, dwPos); //Hacer que lo que cambie
-	SetConsoleCursorInfo(hCon, &cc);	   //se ejecute en consola
+	Position = position;
 }
 
 void ship::MoveUp()
 {
-	/*
-	int x = 0, y = 1;
-	if (kbhit())
-	{
-		char tecla = getch();
-		if (tecla == 'w' || tecla == 'W') y--;
-		//if (tecla == 's' || tecla == 'S') y++;
-		//if (tecla == 'a' || tecla == 'A') x--;
-		//if (tecla == 'd' || tecla == 'D') x++;
+	Vector2 velocity = Vector2(3.0 * cosf(anguloRadianes), 3.0 * sinf(anguloRadianes));
+	Vector2 newPosition = Position + velocity;
 
-		//cout << "Se esta presionando la tecla " << tecla << endl;
-	}*/
+	Trasladar(newPosition);
 
 }
 
 void ship::MoveDown()
 {
+	Vector2 velocity = Vector2(0, 1);
+	Vector2 newPosition = Position - velocity;
 
+	Trasladar(newPosition);
+}
+
+void ship::MoveRight()
+{
+	angulo -= 5.0f;
+	anguloRadianes = (angulo + anguloAjuste) * (PI / 180);	
+}
+
+void ship::MoveLeft()
+{
+	angulo += 5.0f;
+	anguloRadianes = (angulo + anguloAjuste) * (PI / 180);
 }

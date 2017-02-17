@@ -10,6 +10,21 @@ public: Vector2();
 		const float GetX();
 		const float GetY();
 
+		Vector2& operator=(const Vector2& rhs);
+		Vector2& operator+=(const Vector2& rhs);
+		Vector2& operator-=(const Vector2& rhs);
+		Vector2& operator*=(const Vector2& rhs);
+		Vector2& operator/=(const Vector2& rhs);
+		Vector2 operator+(const Vector2& rhs);
+		Vector2 operator-(const Vector2& rhs);
+		Vector2 operator-();
+		Vector2 operator*(const Vector2& rhs);
+		Vector2 operator/(const Vector2& rhs);
+		bool operator==(const Vector2& rhs);
+		bool operator!=(const Vector2& rhs);
+		friend Vector2 operator*(float scaleUnit, const Vector2& rhs);
+		friend Vector2 operator*(const Vector2& lhs, float scaleUnit);
+
 private:   float X;
 		   float Y;
 		   float Length;

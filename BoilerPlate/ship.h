@@ -17,13 +17,16 @@ public:
 	ship();
 	ship(const vector<Vector2> points);
 	void Draw();
-	void Move(int x, int y);
 	void MoveUp();
 	void MoveDown();
 	void MoveRight();
 	void MoveLeft();
+	void Trasladar(Vector2 position);
 
 private: vector<Vector2> Point;
+		 Vector2 Position;
+		 float angulo;
+		 float anguloRadianes;
 };
 
 
