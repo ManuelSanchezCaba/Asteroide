@@ -11,6 +11,8 @@ ship::ship()
 ship::ship(const vector<Vector2> points)
 {
 	Point = points;
+	angulo = 0;
+	anguloRadianes = 0;
 }
 
 void ship::Draw()
@@ -38,19 +40,39 @@ void ship::Trasladar(Vector2 position)
 
 void ship::MoveUp()
 {
-	Vector2 velocity = Vector2(3.0 * cosf(anguloRadianes), 3.0 * sinf(anguloRadianes));
-	Vector2 newPosition = Position + velocity;
+	if (angulo != 0)
+	{
+		Vector2 velocity = Vector2(3.0 * cosf(anguloRadianes), 3.0 * sinf(anguloRadianes));
+		Vector2 newPosition = Position + velocity;
 
-	Trasladar(newPosition);
+		Trasladar(newPosition);
+	}
+	else
+	{
+		Vector2 velocity = Vector2(0, 1);
+		Vector2 newPosition = Position + velocity;
+
+		Trasladar(newPosition);
+	}
 
 }
 
 void ship::MoveDown()
 {
-	Vector2 velocity = Vector2(0, 1);
-	Vector2 newPosition = Position - velocity;
+	if (angulo != 0)
+	{
+		Vector2 velocity = Vector2(-3.0 * cosf(anguloRadianes), -3.0 * sinf(anguloRadianes));
+		Vector2 newPosition = Position + velocity;
 
-	Trasladar(newPosition);
+		Trasladar(newPosition);
+	}
+	else
+	{
+		Vector2 velocity = Vector2(0, -1);
+		Vector2 newPosition = Position + velocity;
+
+		Trasladar(newPosition);
+	}
 }
 
 void ship::MoveRight()

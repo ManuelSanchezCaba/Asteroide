@@ -151,7 +151,6 @@ namespace Engine
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//Ship[Index]->Draw();
 		Ship[Index].Draw();
 
 		SDL_GL_SwapWindow(m_mainWindow);
