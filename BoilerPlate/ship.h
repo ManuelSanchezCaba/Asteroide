@@ -22,11 +22,13 @@ public:
 	void MoveRight();
 	void MoveLeft();
 	void Trasladar(Vector2 position);
+	void limite();
 
 private: vector<Vector2> Point;
 		 Vector2 Position;
 		 float angulo;
 		 float anguloRadianes;
+		 float Masa;
 };
 
 
