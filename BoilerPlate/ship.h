@@ -10,8 +10,10 @@ using namespace std;
 #include <Windows.h>
 #include <vector>
 #include "Vector2.h"
+#include "Draw.h"
+#include "Asteroide.h"
 
-class ship
+class ship : public draw
 {
 public:
 	ship();
@@ -23,12 +25,16 @@ public:
 	void MoveLeft();
 	void Trasladar(Vector2 position);
 	void limite();
+	void setMasa();
 
 private: vector<Vector2> Point;
-		 Vector2 Position;
-		 float angulo;
-		 float anguloRadianes;
+		 Vector2 Velocity;
+		 float Angulo;
+		 float AnguloRadianes;
 		 float Masa;
+		 int Index;
+
+protected: Vector2 Position;
 };
 
 

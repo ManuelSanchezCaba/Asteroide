@@ -3,95 +3,84 @@
 #include <cmath>
 #define PI 3.141592653
 
-const float anguloAjuste = 90.0f;
+const float AnguloAjuste = 90.0f;
+const float Fuerza = 3.0f;
+const float Drag = 1.0f;
+const float Max_Speed = 350.0f;
 
 ship::ship()
+	: Masa(1.0f)
+	, Velocity(0,0)
 {}
 
 ship::ship(const vector<Vector2> points)
 {
 	Point = points;
+	Angulo = 0;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
 }
 
 void ship::Draw()
 {
 	glLoadIdentity();
 
+	setRadioShip(10.0f);
+
 	limite();
 
 	glTranslatef(Position.GetX(),Position.GetY(), 0.0f);
 
-	glRotatef(angulo, 0.0f, 0.0f, 1.0f);
+	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
+	
+	//bool f = Colision(Position);
+	/*
+	if (f == true)
+		cout << "Impacto" << endl;
+	else
+		cout << "No impacto" << endl;*/
 
-	cout << angulo << endl;
+	DrawT(GL_LINE_LOOP, Point);
 
-	glBegin(GL_LINE_LOOP);
-		for (auto point : Point)
-		{
-			glVertex2f(point.GetX(), point.GetY());
-		}
-	glEnd();
 }
 
 void ship::Trasladar(Vector2 position)
 {
 	Position = position;
+	setPosShip(Position);
 }
 
 void ship::MoveUp()
 {
-	if (angulo != 0)
-	{
-		Vector2 velocity = Vector2(5.0 * cosf(anguloRadianes), 5.0 * sinf(anguloRadianes));
-		Vector2 newPosition = Position + velocity;
+		setMasa();
+		Vector2 Velocity = Vector2((Fuerza / Masa) * cosf(AnguloRadianes), (Fuerza / Masa) * sinf(AnguloRadianes));
+		Vector2 newPosition = Position + Velocity;
 
 		Trasladar(newPosition);
-	}
-	else
-	{
-		Vector2 velocity = Vector2(0, 1);
-		Vector2 newPosition = Position + velocity;
-
-		Trasladar(newPosition);
-	}
-
 }
 
 void ship::MoveDown()
 {
-	if (angulo != 0)
-	{
-		Vector2 velocity = Vector2(-5.0 * cosf(anguloRadianes), -5.0 * sinf(anguloRadianes));
-		Vector2 newPosition = Position + velocity;
+		setMasa();
+		Vector2 Velocity = Vector2(-(Fuerza / Masa) * cosf(AnguloRadianes), -(Fuerza / Masa) * sinf(AnguloRadianes));
+		Vector2 newPosition = Position + Velocity;
 
 		Trasladar(newPosition);
-	}
-	else
-	{
-		Vector2 velocity = Vector2(0, 1);
-		Vector2 newPosition = Position - velocity;
-
-		Trasladar(newPosition);
-	}
 }
 
 void ship::MoveRight()
 {
-	angulo -= 5.0f;
-	anguloRadianes = (angulo + anguloAjuste) * (PI / 180);	
+	Angulo -= 5.0f;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);	
 }
 
 void ship::MoveLeft()
 {
-	angulo += 5.0f;
-	anguloRadianes = (angulo + anguloAjuste) * (PI / 180);
+	Angulo += 5.0f;
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
 }
 
 void ship::limite()
 {
-	HANDLE hCon;
-	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-
 	if (Position.GetX() > 600)
 	{
 		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
@@ -112,4 +101,9 @@ void ship::limite()
 		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
 		Trasladar(newPos);
 	}
+}
+
+void ship::setMasa()
+{
+	Masa = Fuerza / 10.0f;
 }

@@ -12,6 +12,7 @@
 #include "TimeManager.hpp"
 #include "ship.h"
 #include "Load.h"
+#include "Asteroide.h"
 
 namespace Engine
 {
@@ -72,6 +73,7 @@ namespace Engine
 
 		int Index = 0;
 		std::vector<ship> Ship;
+		Asteroide ast;
 	};
 }
 #endif /* GAME_HPP */

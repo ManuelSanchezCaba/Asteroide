@@ -3,12 +3,15 @@
 #ifndef _VECTOR2_
 #define _VECTOR2_
 
+#include <cmath>
+
 class Vector2
 {
 public: Vector2();
-		Vector2(float x, float y);
+		explicit Vector2(float x, float y);
 		const float GetX();
 		const float GetY();
+		const float setLength();
 
 		Vector2& operator=(const Vector2& rhs);
 		Vector2& operator+=(const Vector2& rhs);
