@@ -12,6 +12,7 @@ using namespace std;
 #include "Vector2.h"
 #include "Draw.h"
 #include "Asteroide.h"
+#include "Colision.h"
 
 class ship : public draw
 {
@@ -33,6 +34,7 @@ private: vector<Vector2> Point;
 		 float AnguloRadianes;
 		 float Masa;
 		 int Index;
+		 colision colic;
 
 protected: Vector2 Position;
 };

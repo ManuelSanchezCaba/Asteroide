@@ -24,7 +24,7 @@ void ship::Draw()
 {
 	glLoadIdentity();
 
-	setRadioShip(10.0f);
+	colic.setRadioShip(10.0f);
 
 	limite();
 
@@ -32,7 +32,7 @@ void ship::Draw()
 
 	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
 	
-	//bool f = Colision(Position);
+	bool f = colic.setColision();
 	/*
 	if (f == true)
 		cout << "Impacto" << endl;
@@ -46,7 +46,7 @@ void ship::Draw()
 void ship::Trasladar(Vector2 position)
 {
 	Position = position;
-	setPosShip(Position);
+	colic.setPosShip(Position);
 }
 
 void ship::MoveUp()

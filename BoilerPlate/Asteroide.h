@@ -8,6 +8,7 @@
 #include <time.h>
 #include "Draw.h"
 #include <random>
+#include "Colision.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ public:  Asteroide();
 private: float Angulo;
 		 vector<Vector2> Point;
 		 float Radio;
+		 colision colic2;
 
 protected: Vector2 PositionAst;
 };

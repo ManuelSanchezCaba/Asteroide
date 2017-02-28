@@ -12,6 +12,7 @@
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Asteroide.cpp" />
     <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Colision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
@@ -24,6 +25,7 @@
     <ClInclude Include="Load.h" />
     <ClInclude Include="Asteroide.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Colision.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

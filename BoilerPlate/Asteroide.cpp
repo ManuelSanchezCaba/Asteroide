@@ -23,7 +23,7 @@ void Asteroide::DrawAst()
 {
 	glLoadIdentity();
 
-	setRadioAst(Radio);
+	colic2.setRadioAst(Radio);
 
 	Mover();
 
@@ -32,8 +32,6 @@ void Asteroide::DrawAst()
 	glTranslatef(PositionAst.GetX(), PositionAst.GetY(), 0.0f);
 
 	glRotated(Angulo, 0.0f, 0.0f, 1.0f);
-
-	bool f = Colision(PositionAst);
 
 	DrawT(GL_LINE_LOOP, Point);
 
@@ -79,6 +77,7 @@ void Asteroide::limite()
 void Asteroide::Trasladar(Vector2 newPos)
 {
 	PositionAst = newPos;
+	colic2.setPosAst(PositionAst);
 }
 
 void Asteroide::GenerarCirculo()

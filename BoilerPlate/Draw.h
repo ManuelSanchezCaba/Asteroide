@@ -6,6 +6,7 @@
 #include <vector>
 #include "Vector2.h"
 #include <iostream>
+#include "Colision.h"
 
 using namespace std;
 
@@ -13,14 +14,7 @@ class draw
 {
 public: draw();
 		void DrawT(unsigned int mode, vector<Vector2> point);
-		void setPosShip(Vector2 pos);
-		void setRadioAst(float ra);
-		void setRadioShip(float ra);
-		bool Colision(Vector2 PositionAst);
 
-private: float RadioAst;
-		 float RadioShip;
-		 Vector2 PositionShip;
 };
 
 
