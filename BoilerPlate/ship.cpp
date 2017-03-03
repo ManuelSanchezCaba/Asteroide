@@ -5,13 +5,17 @@
 
 const float AnguloAjuste = 90.0f;
 const float Fuerza = 3.0f;
-const float Drag = 1.0f;
-const float Max_Speed = 350.0f;
+const float Drag = 0.999f;
+const float Max_Speed = 10.0f;
 
 ship::ship()
 	: Masa(1.0f)
 	, Velocity(0,0)
-{}
+	, RadioShip(90.0f)
+	, Index(0)
+{
+	setRadioAl(RadioShip);
+}
 
 ship::ship(const vector<Vector2> points)
 {
@@ -24,29 +28,25 @@ void ship::Draw()
 {
 	glLoadIdentity();
 
-	colic.setRadioShip(10.0f);
-
 	limite();
 
 	glTranslatef(Position.GetX(),Position.GetY(), 0.0f);
 
 	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
-	
-	bool f = colic.setColision();
-	/*
-	if (f == true)
-		cout << "Impacto" << endl;
-	else
-		cout << "No impacto" << endl;*/
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 
 	DrawT(GL_LINE_LOOP, Point);
+
+	//setPoint();
+	//DrawT(GL_LINE_LOOP, Circulo);
 
 }
 
 void ship::Trasladar(Vector2 position)
 {
 	Position = position;
-	colic.setPosShip(Position);
+	setPosAl(Position);
 }
 
 void ship::MoveUp()
@@ -64,6 +64,7 @@ void ship::MoveDown()
 		Vector2 Velocity = Vector2(-(Fuerza / Masa) * cosf(AnguloRadianes), -(Fuerza / Masa) * sinf(AnguloRadianes));
 		Vector2 newPosition = Position + Velocity;
 
+		newPosition = Vector2(newPosition.GetX() * Drag, newPosition.GetY() * Drag);
 		Trasladar(newPosition);
 }
 
@@ -106,4 +107,37 @@ void ship::limite()
 void ship::setMasa()
 {
 	Masa = Fuerza / 10.0f;
+}
+
+void ship::setPoint()
+{
+	for (int point = 0; point < 16; ++point)
+	{
+		float valor = static_cast<float> (2.0f * PI * (point / 16.0f));
+		float x = RadioShip * cosf(valor);
+		float y = RadioShip * sinf(valor);
+		Circulo.push_back(Vector2(x, y));
+	}
+}
+
+Vector2 ship::getPosition()
+{
+	return Position;
+}
+
+void ship::Reiniciar()
+{
+	Position = Vector2(0.0f, 0.0f);
+	Angulo = 0;
+	AnguloRadianes = 0;
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	glBegin(GL_LINE_LOOP);
+	for (auto point : Point)
+	{
+		glVertex2f(point.GetX(), point.GetY());
+	}
+	glEnd();
+
 }

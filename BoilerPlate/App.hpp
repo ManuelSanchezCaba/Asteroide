@@ -13,6 +13,9 @@
 #include "ship.h"
 #include "Load.h"
 #include "Asteroide.h"
+#include "Draw.h"
+#include <random>
+#include <algorithm>
 
 namespace Engine
 {
@@ -44,6 +47,9 @@ namespace Engine
 		bool Init							( );
 		void Update							( );
 		void Render							( );
+		int Index;
+		std::vector<ship> Ship;
+		std::vector<Asteroide*> Ast;
 	private:
 		/* =============================================================
 		 * PRIVATE FUNCTIONS
@@ -71,9 +77,7 @@ namespace Engine
 		GameState::State					m_state;
 		Engine::TimeManager*				m_timer;
 
-		int Index = 0;
-		std::vector<ship> Ship;
-		Asteroide ast;
+		//Asteroide ast = Asteroide(Vector2(rand()%50, rand()%50), 2);
 	};
 }
 #endif /* GAME_HPP */

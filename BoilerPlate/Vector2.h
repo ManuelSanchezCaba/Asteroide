@@ -12,6 +12,7 @@ public: Vector2();
 		const float GetX();
 		const float GetY();
 		const float setLength();
+		const float getLengt();
 
 		Vector2& operator=(const Vector2& rhs);
 		Vector2& operator+=(const Vector2& rhs);

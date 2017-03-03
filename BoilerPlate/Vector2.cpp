@@ -19,6 +19,11 @@ const float Vector2::setLength()
 	return sqrt(X * X + Y * Y);
 }
 
+const float Vector2::getLengt()
+{
+	return Length;
+}
+
 const float Vector2::GetX()
 {
 	return X;

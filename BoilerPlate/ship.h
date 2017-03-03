@@ -11,8 +11,9 @@ using namespace std;
 #include <vector>
 #include "Vector2.h"
 #include "Draw.h"
-#include "Asteroide.h"
 #include "Colision.h"
+#include <conio.h>
+#include <time.h>
 
 class ship : public draw
 {
@@ -27,14 +28,19 @@ public:
 	void Trasladar(Vector2 position);
 	void limite();
 	void setMasa();
+	void setPoint();
+	Vector2 getPosition();
+	void Reiniciar();
 
 private: vector<Vector2> Point;
+		 vector<Vector2> Circulo;
 		 Vector2 Velocity;
 		 float Angulo;
 		 float AnguloRadianes;
 		 float Masa;
 		 int Index;
-		 colision colic;
+		 float RadioShip;
+		 float Speed;
 
 protected: Vector2 Position;
 };

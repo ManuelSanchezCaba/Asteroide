@@ -3,26 +3,19 @@
 #ifndef _COLISION_
 #define _COLISION_
 
+#include <vector>
 #include "Vector2.h"
+#include "ship.h"
+#include "Asteroide.h"
 #include "Draw.h"
 
 using namespace std;
 
-class colision
+class Colision //: public draw
 {
-public: colision();
-		bool setColision();
-		void setPosShip(Vector2 pos);
-		void setPosAst(Vector2 pos);
-		void setRadioAst(float ra);
-		void setRadioShip(float ra);
-
-private: Vector2 PosShip;
-		 Vector2 PosAst;
-		 float RadioAst;
-		 float RadioShip;
+public: Colision();
+		//bool Colliding();
 };
-
 
 
 #endif // !_COLISION_

@@ -75,6 +75,13 @@ namespace Engine
 
 		Load config;
 		Ship = config.load();
+		Index = 0;
+
+		for (int i = 0; i < 5; i++)
+		{
+			Asteroide* newAst = new Asteroide();
+			Ast.push_back(newAst);
+		}
 
 		return true;
 	}
@@ -139,11 +146,16 @@ namespace Engine
 			endTime = m_timer->GetElapsedTimeInSeconds();
 		}
 
-		//double elapsedTime = endTime - startTime;        
+		double elapsedTime = endTime - startTime;        
 
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 
 		m_nUpdates++;
+
+		for (int i = 0; i < Ast.size(); i++)
+		{
+			Ast.at(i)->Mover(DESIRED_FRAME_RATE);
+		}
 	}
 
 	void App::Render()
@@ -153,8 +165,59 @@ namespace Engine
 
 		Ship[Index].Draw();
 
-		ast.DrawAst();
+		for (int i = 0; i < Ast.size(); i++)
+		{
+			Ast.at(i)->DrawAst();
+		}
+		
+		bool f = false;
 
+		for (auto copy : Ast)
+		{
+			Asteroide* pAst = dynamic_cast<Asteroide*> (copy);
+			if (pAst)
+			{
+				if (Ship[Index].Colliding(*copy))
+				{
+					int size = pAst->getSize();
+
+					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
+					delete copy;
+
+					Ship[Index].Reiniciar();
+
+					if (size == 0)
+					{
+						for (int i = 0; i < 2; i++)
+						{
+							Vector2 PosAleatoria;
+							float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+							float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+							PosAleatoria = Vector2(x, y);
+
+							Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
+							Ast.push_back(nEnemy);
+						}
+					}
+					if (size == 1)
+					{
+						for (int i = 0; i < 2; i++)
+						{
+							Vector2 PosAleatoria;
+							float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+							float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+							PosAleatoria = Vector2(x, y);
+
+							Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
+							Ast.push_back(nEnemy);
+						}
+					}
+					break;
+				}
+			}
+
+		}
+		
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
 

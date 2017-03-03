@@ -5,15 +5,39 @@
 #define PI 3.141592653f
 
 const float Drag = 1.0f;
-const float Min = 12.5f;
-const float Max = 22.5f;
+const float Fuerza = 1.25f;
+const Vector2 null = Vector2(0, 0);
+const float Min = 25.0f;
+const float Max = 45.0f;
 
-Asteroide::Asteroide()
-	: Radio(30.0f)
+Asteroide::Asteroide(Vector2 pos, int size)
+	: RadioAst(40.0f)
 	, Angulo(0)
 {
+	setMasa();
+	PositionAst = pos;
+	AnguloRadian = (Angulo + 90.0f) * (PI / 180);
+
+	if (size == 0)
+		Size = size;
+	if (size == 1)
+		Size = size;
+	if (size == 2)
+		Size = size;
+
 	GenerarCirculo();
-	//setPosAste(Position);
+}
+
+Asteroide::Asteroide()
+	: RadioAst(40.0f)
+	, Angulo(0)
+{
+	setMasa();
+	Size = 0;
+	GenerarCirculo();
+	PositionAst = PosAL();
+	AnguloRadian = (Angulo + 90.0f) * (PI / 180);
+	setRadioAl(RadioAst);
 }
 
 Asteroide::~Asteroide()
@@ -22,10 +46,6 @@ Asteroide::~Asteroide()
 void Asteroide::DrawAst()
 {
 	glLoadIdentity();
-
-	colic2.setRadioAst(Radio);
-
-	Mover();
 
 	limite();
 
@@ -37,18 +57,45 @@ void Asteroide::DrawAst()
 
 }
 
-void Asteroide::Mover()
-{
-	Vector2 velocity = Vector2(static_cast<float> (rand()%5), static_cast<float> (rand()%5));
-	Vector2 newPos = PositionAst + velocity;
+void Asteroide::Mover(float deltaTime)
+{	
+	Vector2 newPos;
+	if (Masa > 0)
+	{
+		float Impulso = Fuerza / Masa;
+		float x = Impulso * cosf(AnguloRadian);
+		float y = Impulso * sinf(AnguloRadian);
+		newPos += Vector2(x, y);
+	}
+	newPos += PositionAst;
 
-	Angulo += 0.9f;
+	Angulo += 1.0f;
 
 	Trasladar(newPos);
+
 }
 
-void Asteroide::Dividir()
-{}
+void Asteroide::Dividir(int cantidad, int size, Vector2 position)
+{
+	if (position == null)
+	{
+		for (int i = 0; i < cantidad; i++)
+		{
+			Asteroide* nEnemy = new Asteroide();
+			nEnemy->DrawAst();
+		}
+		return;
+	}
+
+	else
+	{
+		for (int i = 0; i < cantidad; i++)
+		{
+			Asteroide* nEnemy = new Asteroide(position, size);
+			nEnemy->DrawAst();	
+		}
+	}
+}
 
 void Asteroide::limite()
 {
@@ -77,19 +124,33 @@ void Asteroide::limite()
 void Asteroide::Trasladar(Vector2 newPos)
 {
 	PositionAst = newPos;
-	colic2.setPosAst(PositionAst);
+	setPosAl(PositionAst);
 }
 
 void Asteroide::GenerarCirculo()
 {
-	int min = static_cast<int> (Min / 1);
-	int max = static_cast<int> (Max / 1);
+	int min = static_cast<int> (Min / (Size + 1));
+	int max = static_cast<int> (Max / (Size + 1));
+
+	if (Size == 0) RadioAst = RadioAst;
+	if (Size == 1) RadioAst = RadioAst - 20;
+	if (Size == 2) RadioAst = RadioAst - 10;
+	setRadioAl(RadioAst);
 
 	for (int point = 0; point < 16; ++point)
 	{
-		float valor = static_cast<float> (Radio * PI * (point / 16.0f));
-		float x = Radio * cosf(valor) - rand()%min;
-		float y = Radio * sinf(valor) - rand()%max;
-		Point.push_back(Vector2(x, y));
+		const float valor = static_cast<float> (2.0f * PI * (point / 16.0f));
+		const float Aleatorio = static_cast<float> (min + (max - min) * (rand() / static_cast<float> (RAND_MAX)));
+		Point.push_back(Vector2(sinf(valor) * Aleatorio, cosf(valor) * Aleatorio));
 	}
+}
+
+void Asteroide::setMasa()
+{
+	Masa = Fuerza / 3.0f;
+}
+
+int Asteroide::getSize()
+{
+	return Size;
 }

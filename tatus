@@ -1,0 +1,74 @@
+[33mcommit 3389b2159e0423458bbe2d663b0c3809b25d7aab[m
+Merge: 98e8e09 6c6aaf1
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Tue Feb 28 11:10:56 2017 -0400
+
+    Crear Asteroide
+
+[33mcommit 98e8e090a412791718240d005a6c6baa208ddf48[m
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Tue Feb 28 00:24:42 2017 -0400
+
+    Dibujar Asteroide
+
+[33mcommit 2078c5f93ba708043a6b097d7c0e6d3784caadd9[m
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Wed Feb 22 13:06:55 2017 -0400
+
+    Poniendo los limites de la pantalla
+
+[33mcommit 6c6aaf165a258c2d630308b785ef61916e75ee94[m
+Author: Manuel Francisco Sánchez Caba <20155872@academico.pucmm>
+Date:   Tue Feb 21 12:35:12 2017 -0400
+
+    Mover nave
+
+[33mcommit 22be79f55c8f5f1f3dbf462835e07f87aec8af63[m
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Fri Feb 17 18:45:19 2017 -0400
+
+    Mover con rotacion la nave
+
+[33mcommit f2624cec8d512b3e57ffaca13723cedaa920559e[m
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Thu Feb 16 06:45:30 2017 -0400
+
+    Float
+
+[33mcommit 86eafbdf98a049718a574762ea904a2226d84e40[m
+Author: Manuel Francisco Sánchez Caba <20155872@academico.pucmm>
+Date:   Wed Feb 15 13:19:43 2017 -0400
+
+    Hacer que la nave aparezca
+
+[33mcommit 6eb4ca9d1d409755608a24617ee529005165f833[m
+Author: ManuelSanchezCaba <mfsanchezcaba@gmail.com>
+Date:   Thu Feb 2 20:28:59 2017 -0400
+
+    Primer Reemplazo
+
+[33mcommit 2ff9bef6d925df6170f3bf540f69f5d3b42bfce3[m
+Author: Raúl Roa <raul.roa@gmail.com>
+Date:   Thu Jun 9 08:08:41 2016 -0500
+
+    Changed README.md
+    
+    Added missing mention to OpenGL.
+
+[33mcommit 6dc9b1361fe71617be57caed5d3584e43173bc8a[m
+Author: Winner Crespo <wistcc@users.noreply.github.com>
+Date:   Wed Jun 8 13:35:42 2016 -0800
+
+    Adding externals and editing .gitignore (#1)
+
+[33mcommit ce2a7541306300cc13dbdde48643268efd6509dd[m
+Author: Raúl Roa <raul.roa@gmail.com>
+Date:   Wed Jun 8 16:09:38 2016 -0500
+
+    First commit.
+
+[33mcommit 9dc3a3c39abb9a0cdeae0c0154565274d7bd8687[m
+Author: Raúl Roa <raul.roa@gmail.com>
+Date:   Wed Jun 8 16:02:50 2016 -0500
+
+    Initial commit

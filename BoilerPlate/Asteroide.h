@@ -14,21 +14,25 @@ using namespace std;
 
 class Asteroide : public draw
 {
-public:  Asteroide();
+public: Asteroide(Vector2 pos, int size);
+		Asteroide();
 		~Asteroide();
 		void DrawAst();
-		void Mover();
+		void Mover(float deltaTime);
 		void Trasladar(Vector2 newPos);
 		void limite();
 		void GenerarCirculo();
-		void Dividir();
+		void Dividir(int Cantidad, int size, Vector2 position);
+		void setMasa();
+		int getSize();
 
 private: float Angulo;
 		 vector<Vector2> Point;
-		 float Radio;
-		 colision colic2;
-
-protected: Vector2 PositionAst;
+		 float RadioAst;
+		 float Masa;
+		 float AnguloRadian;
+		 int Size;
+		 Vector2 PositionAst;
 };
 
 
