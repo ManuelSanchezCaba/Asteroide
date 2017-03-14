@@ -41,6 +41,8 @@ private: vector<Vector2> Point;
 		 int Index;
 		 float RadioShip;
 		 float Speed;
+		 Vector2 Min;
+		 Vector2 Max;
 
 protected: Vector2 Position;
 };

@@ -3,6 +3,7 @@
 #ifndef _ASTEROIDE_
 #define _ASTEROIDE_
 
+#include <iostream>
 #include "Vector2.h"
 #include <vector>
 #include <time.h>
@@ -33,6 +34,8 @@ private: float Angulo;
 		 float AnguloRadian;
 		 int Size;
 		 Vector2 PositionAst;
+		 Vector2 Mn;
+		 Vector2 Mx;
 };
 
 

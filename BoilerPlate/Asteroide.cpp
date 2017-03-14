@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Asteroide.h"
 #include <SDL2/SDL_opengl.h>
 #include <cmath>
@@ -26,6 +25,10 @@ Asteroide::Asteroide(Vector2 pos, int size)
 		Size = size;
 
 	GenerarCirculo();
+	Centro = PositionAst;
+	setRadioAl(RadioAst);
+	Mn = GenerarMin(Centro, RadioAst);
+	Mx = GenerarMax(Centro, RadioAst);
 }
 
 Asteroide::Asteroide()
@@ -38,6 +41,9 @@ Asteroide::Asteroide()
 	PositionAst = PosAL();
 	AnguloRadian = (Angulo + 90.0f) * (PI / 180);
 	setRadioAl(RadioAst);
+	Centro = PositionAst;
+	Mn = GenerarMin(Centro, RadioAst);
+	Mx = GenerarMax(Centro, RadioAst);
 }
 
 Asteroide::~Asteroide()
@@ -54,6 +60,10 @@ void Asteroide::DrawAst()
 	glRotated(Angulo, 0.0f, 0.0f, 1.0f);
 
 	DrawT(GL_LINE_LOOP, Point);
+
+	//DrawSquare(GL_LINE_LOOP, Mn, Mx);
+
+	cout << Centro.GetX() << endl;
 
 }
 
@@ -123,7 +133,8 @@ void Asteroide::limite()
 
 void Asteroide::Trasladar(Vector2 newPos)
 {
-	PositionAst = newPos;
+	PositionAst = static_cast<Vector2> (newPos);
+	Centro = PositionAst;
 	setPosAl(PositionAst);
 }
 

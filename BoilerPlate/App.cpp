@@ -77,7 +77,7 @@ namespace Engine
 		Ship = config.load();
 		Index = 0;
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			Asteroide* newAst = new Asteroide();
 			Ast.push_back(newAst);
@@ -177,8 +177,10 @@ namespace Engine
 			Asteroide* pAst = dynamic_cast<Asteroide*> (copy);
 			if (pAst)
 			{
-				if (Ship[Index].Colliding(*copy))
+				if (Ship[Index].CollidingSquare(*copy))
 				{
+					cout << "Entro" << endl;
+
 					int size = pAst->getSize();
 
 					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());

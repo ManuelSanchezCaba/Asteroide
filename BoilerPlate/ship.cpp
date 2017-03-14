@@ -15,6 +15,8 @@ ship::ship()
 	, Index(0)
 {
 	setRadioAl(RadioShip);
+	Min = GenerarMin(Position, RadioShip);
+	Max = GenerarMax(Position, RadioShip);
 }
 
 ship::ship(const vector<Vector2> points)
@@ -22,6 +24,8 @@ ship::ship(const vector<Vector2> points)
 	Point = points;
 	Angulo = 0;
 	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+	Min = GenerarMin(Position, RadioShip);
+	Max = GenerarMax(Position, RadioShip);
 }
 
 void ship::Draw()
@@ -38,8 +42,7 @@ void ship::Draw()
 
 	DrawT(GL_LINE_LOOP, Point);
 
-	//setPoint();
-	//DrawT(GL_LINE_LOOP, Circulo);
+ 	DrawSquare(GL_LINE_LOOP, Min, Max);
 
 }
 
@@ -47,6 +50,7 @@ void ship::Trasladar(Vector2 position)
 {
 	Position = position;
 	setPosAl(Position);
+	Centro = Position;
 }
 
 void ship::MoveUp()
