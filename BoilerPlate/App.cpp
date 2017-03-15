@@ -77,7 +77,7 @@ namespace Engine
 		Ship = config.load();
 		Index = 0;
 
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			Asteroide* newAst = new Asteroide();
 			Ast.push_back(newAst);
@@ -169,8 +169,6 @@ namespace Engine
 		{
 			Ast.at(i)->DrawAst();
 		}
-		
-		bool f = false;
 
 		for (auto copy : Ast)
 		{
@@ -179,8 +177,6 @@ namespace Engine
 			{
 				if (Ship[Index].CollidingSquare(*copy))
 				{
-					cout << "Entro" << endl;
-
 					int size = pAst->getSize();
 
 					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());

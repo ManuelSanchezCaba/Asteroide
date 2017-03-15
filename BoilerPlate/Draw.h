@@ -13,7 +13,7 @@ class draw
 {
 public: draw();
 		void DrawT(unsigned int mode, vector<Vector2> point);
-		void DrawSquare(unsigned int mode, const Vector2 Mn, const Vector2 Mx);
+		void DrawSquare(unsigned int mode, const Vector2 Mn, const Vector2 Mx, const Vector2 Pos);
 		Vector2 PosAL() const;
 		bool Colliding(draw rhs);
 		bool CollidingSquare(draw rhs);
@@ -21,11 +21,10 @@ public: draw();
 		virtual void setRadioAl(float ra) { radioAl = ra; }
 		void setMin(const float Radio);
 		void setMax(const float Radio);
-		Vector2 GenerarMin(Vector2 Posision, float Radio) const;
-		Vector2 GenerarMax(Vector2 Posision, float Radio) const;
-		Vector2 Centro;
+		Vector2 GenerarMin(const Vector2 Posicion, float Radio);
+		Vector2 GenerarMax(const Vector2 Posicion, float Radio);
 
-protected: Vector2 PosAl;
+private:   Vector2 PosAl;
 		   Vector2 Minimo;
 		   Vector2 Maximo;
 		   float radioAl;

@@ -11,7 +11,7 @@ const float Max_Speed = 10.0f;
 ship::ship()
 	: Masa(1.0f)
 	, Velocity(0,0)
-	, RadioShip(90.0f)
+	, RadioShip(40.0f)
 	, Index(0)
 {
 	setRadioAl(RadioShip);
@@ -24,6 +24,8 @@ ship::ship(const vector<Vector2> points)
 	Point = points;
 	Angulo = 0;
 	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+	RadioShip = 40.0f;
+	setRadioAl(RadioShip);
 	Min = GenerarMin(Position, RadioShip);
 	Max = GenerarMax(Position, RadioShip);
 }
@@ -42,15 +44,13 @@ void ship::Draw()
 
 	DrawT(GL_LINE_LOOP, Point);
 
- 	DrawSquare(GL_LINE_LOOP, Min, Max);
-
+ 	DrawSquare(GL_LINE_LOOP, Min, Max, Position);
 }
 
 void ship::Trasladar(Vector2 position)
 {
 	Position = position;
 	setPosAl(Position);
-	Centro = Position;
 }
 
 void ship::MoveUp()

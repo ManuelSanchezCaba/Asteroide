@@ -25,10 +25,9 @@ Asteroide::Asteroide(Vector2 pos, int size)
 		Size = size;
 
 	GenerarCirculo();
-	Centro = PositionAst;
 	setRadioAl(RadioAst);
-	Mn = GenerarMin(Centro, RadioAst);
-	Mx = GenerarMax(Centro, RadioAst);
+	Mn = GenerarMin(PositionAst, RadioAst);
+	Mx = GenerarMax(PositionAst, RadioAst);
 }
 
 Asteroide::Asteroide()
@@ -41,9 +40,8 @@ Asteroide::Asteroide()
 	PositionAst = PosAL();
 	AnguloRadian = (Angulo + 90.0f) * (PI / 180);
 	setRadioAl(RadioAst);
-	Centro = PositionAst;
-	Mn = GenerarMin(Centro, RadioAst);
-	Mx = GenerarMax(Centro, RadioAst);
+	Mn = GenerarMin(PositionAst, RadioAst);
+	Mx = GenerarMax(PositionAst, RadioAst);
 }
 
 Asteroide::~Asteroide()
@@ -61,10 +59,7 @@ void Asteroide::DrawAst()
 
 	DrawT(GL_LINE_LOOP, Point);
 
-	//DrawSquare(GL_LINE_LOOP, Mn, Mx);
-
-	cout << Centro.GetX() << endl;
-
+	DrawSquare(GL_LINE_LOOP, Mn, Mx, PositionAst);
 }
 
 void Asteroide::Mover(float deltaTime)
@@ -134,7 +129,6 @@ void Asteroide::limite()
 void Asteroide::Trasladar(Vector2 newPos)
 {
 	PositionAst = static_cast<Vector2> (newPos);
-	Centro = PositionAst;
 	setPosAl(PositionAst);
 }
 
@@ -145,7 +139,7 @@ void Asteroide::GenerarCirculo()
 
 	if (Size == 0) RadioAst = RadioAst;
 	if (Size == 1) RadioAst = RadioAst - 20;
-	if (Size == 2) RadioAst = RadioAst - 10;
+	if (Size == 2) RadioAst = RadioAst - 30;
 	setRadioAl(RadioAst);
 
 	for (int point = 0; point < 16; ++point)

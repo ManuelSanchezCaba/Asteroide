@@ -18,9 +18,13 @@ void draw::DrawT(unsigned int mode, vector<Vector2> Point)
 
 }
 
-void draw::DrawSquare(unsigned int mode, Vector2 Mn, Vector2 Mx)
+void draw::DrawSquare(unsigned int mode, Vector2 Mn, Vector2 Mx, Vector2 Pos)
 {
-	glBegin(GL_LINE_LOOP);
+	glLoadIdentity();
+
+	glTranslatef(Pos.GetX(), Pos.GetY(), 0.0f);
+
+	glBegin(mode);
 
 	glVertex2i(Mn.GetX(), Mn.GetY());
 	glVertex2i(Mn.GetX(), Mx.GetY());
@@ -44,7 +48,7 @@ bool draw::Colliding(draw rhs)
 	float x = PosAl.GetX() - rhs.PosAl.GetX();
 	float y = PosAl.GetY() - rhs.PosAl.GetY();
 
-	float radio = (radioAl + 32.5f) + rhs.radioAl;
+	float radio = (radioAl) + rhs.radioAl;
 	cout << radioAl << endl;
 	float Distancia = x * x + y * y;
 
@@ -55,10 +59,10 @@ bool draw::Colliding(draw rhs)
 
 bool draw::CollidingSquare(draw rhs)
 {
-	setMin(radioAl + 33.0f);
-	setMax(radioAl + 33.0f);
-	rhs.setMin(rhs.radioAl + 33.0f);
-	rhs.setMax(rhs.radioAl + 33.0f);
+	setMin(radioAl);
+	setMax(radioAl);
+	rhs.setMin(rhs.radioAl);
+	rhs.setMax(rhs.radioAl);
 
 	return (Minimo.GetX() <= rhs.Maximo.GetX() &&
 		(Maximo.GetX() >= rhs.Minimo.GetX())) &&
@@ -68,32 +72,32 @@ bool draw::CollidingSquare(draw rhs)
 
 void draw::setMin(const float Radio)
 {
-	float x = Centro.GetX() - Radio;
-	float y = Centro.GetY() - Radio;
+	float x = PosAl.GetX() - Radio;
+	float y = PosAl.GetY() - Radio;
 
 	Minimo = Vector2(x, y);
 }
 
 void draw::setMax(const float Radio)
 {
-	float x = Centro.GetX() + Radio;
-	float y = Centro.GetY() + Radio;
+	float x = PosAl.GetX() + Radio;
+	float y = PosAl.GetY() + Radio;
 
 	Maximo = Vector2(x, y);
 }
 
-Vector2 draw::GenerarMin(Vector2 Posision, float Radio) const
+Vector2 draw::GenerarMin(Vector2 Posicion, float Radio)
 {
-	float x1 = Posision.GetX() - Radio;
-	float y1 = Posision.GetY() - Radio;
+	float x1 = PosAl.GetX() - Radio;
+	float y1 = PosAl.GetY() - Radio;
 
 	return Vector2(x1, y1);
 }
 
-Vector2 draw::GenerarMax(Vector2 Posision, float Radio) const
+Vector2 draw::GenerarMax(Vector2 Posision, float Radio)
 {
-	float x = Posision.GetX() + Radio;
-	float y = Posision.GetY() + Radio;
+	float x = PosAl.GetX() + Radio;
+	float y = PosAl.GetY() + Radio;
 
 	return Vector2(x, y);
 }

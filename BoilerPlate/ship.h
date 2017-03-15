@@ -11,7 +11,6 @@ using namespace std;
 #include <vector>
 #include "Vector2.h"
 #include "Draw.h"
-#include "Colision.h"
 #include <conio.h>
 #include <time.h>
 
