@@ -30,6 +30,7 @@ public:
 	void setPoint();
 	Vector2 getPosition();
 	void Reiniciar();
+	void Update(float deltatime);
 
 private: vector<Vector2> Point;
 		 vector<Vector2> Circulo;
@@ -42,6 +43,8 @@ private: vector<Vector2> Point;
 		 float Speed;
 		 Vector2 Min;
 		 Vector2 Max;
+		 bool Inmune;
+		 int Time;
 
 protected: Vector2 Position;
 };

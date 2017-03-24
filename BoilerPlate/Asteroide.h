@@ -25,9 +25,11 @@ public: Asteroide(Vector2 pos, int size);
 		void Dividir(int Cantidad, int size, Vector2 position);
 		void setMasa();
 		int getSize();
+		void setPoint();
 
 private: float Angulo;
 		 vector<Vector2> Point;
+		 vector<Vector2> Circulo;
 		 float RadioAst;
 		 float Masa;
 		 float AnguloRadian;

@@ -21,7 +21,7 @@ const float Vector2::setLength()
 
 const float Vector2::getLengt()
 {
-	return Length;
+	return sqrt(X * X + Y * Y);
 }
 
 const float Vector2::GetX()

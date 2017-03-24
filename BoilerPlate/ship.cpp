@@ -9,14 +9,15 @@ const float Drag = 0.999f;
 const float Max_Speed = 10.0f;
 
 ship::ship()
-	: Masa(1.0f)
-	, Velocity(0,0)
+	: Velocity(0,0)
 	, RadioShip(40.0f)
 	, Index(0)
 {
 	setRadioAl(RadioShip);
 	Min = GenerarMin(Position, RadioShip);
 	Max = GenerarMax(Position, RadioShip);
+	setMasa();
+	setPoint();
 }
 
 ship::ship(const vector<Vector2> points)
@@ -28,6 +29,9 @@ ship::ship(const vector<Vector2> points)
 	setRadioAl(RadioShip);
 	Min = GenerarMin(Position, RadioShip);
 	Max = GenerarMax(Position, RadioShip);
+	setMasa();
+	Time = 0;
+	setPoint();
 }
 
 void ship::Draw()
@@ -40,11 +44,18 @@ void ship::Draw()
 
 	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	if (!Inmune)
+	{
+		if (Time >= 100)
+		{
+			Inmune = true;
+			glColor3f(1.0f, 1.0f, 1.0f);
+		}
+		Time++;
+	}
 
 	DrawT(GL_LINE_LOOP, Point);
-
- 	DrawSquare(GL_LINE_LOOP, Min, Max, Position);
+ 	//DrawSquare(GL_LINE_LOOP, Min, Max, Position);
 }
 
 void ship::Trasladar(Vector2 position)
@@ -55,21 +66,20 @@ void ship::Trasladar(Vector2 position)
 
 void ship::MoveUp()
 {
-		setMasa();
-		Vector2 Velocity = Vector2((Fuerza / Masa) * cosf(AnguloRadianes), (Fuerza / Masa) * sinf(AnguloRadianes));
-		Vector2 newPosition = Position + Velocity;
-
-		Trasladar(newPosition);
+	if (Masa > 0)
+	{
+		Vector2 velocity = Vector2((Fuerza / Masa) * cosf(AnguloRadianes), (Fuerza / Masa) * sinf(AnguloRadianes));
+		Velocity += velocity;
+	}
 }
 
 void ship::MoveDown()
 {
-		setMasa();
-		Vector2 Velocity = Vector2(-(Fuerza / Masa) * cosf(AnguloRadianes), -(Fuerza / Masa) * sinf(AnguloRadianes));
-		Vector2 newPosition = Position + Velocity;
-
-		newPosition = Vector2(newPosition.GetX() * Drag, newPosition.GetY() * Drag);
-		Trasladar(newPosition);
+	if (Masa > 0)
+	{
+		Vector2 velocity = Vector2(-(Fuerza / Masa) * cosf(AnguloRadianes), -(Fuerza / Masa) * sinf(AnguloRadianes));
+		Velocity += velocity;
+	}
 }
 
 void ship::MoveRight()
@@ -110,7 +120,15 @@ void ship::limite()
 
 void ship::setMasa()
 {
-	Masa = Fuerza / 10.0f;
+	for (auto count : Point)
+	{
+		Masa += 0.2f;
+	}
+
+	if (Masa < 2.0f)
+		Masa = 1.5f;
+
+	return;
 }
 
 void ship::setPoint()
@@ -134,6 +152,8 @@ void ship::Reiniciar()
 	Position = Vector2(0.0f, 0.0f);
 	Angulo = 0;
 	AnguloRadianes = 0;
+	Velocity = Vector2(0.0f, 0.0f);
+	Inmune = false;
 
 	glColor3f(1.0f, 0.0f, 0.0f);
 
@@ -143,5 +163,21 @@ void ship::Reiniciar()
 		glVertex2f(point.GetX(), point.GetY());
 	}
 	glEnd();
+}
 
+void ship::Update(float deltatime)
+{
+	float speed = fabs(Velocity.getLengt());
+	if (speed > Max_Speed)
+	{
+		Velocity = Vector2((Velocity.GetX() / speed) * Max_Speed, (Velocity.GetY() / speed) * Max_Speed);
+
+		Speed = fabs(Velocity.getLengt());
+	}
+
+	Velocity = Vector2(Velocity.GetX() * Drag, Velocity.GetY() * Drag);
+
+	Vector2 pos = Position + Velocity;
+
+	Trasladar(pos);
 }

@@ -134,40 +134,11 @@ namespace Engine
 	{
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
-		// Update code goes here
-		//
-
-		double endTime = m_timer->GetElapsedTimeInSeconds();
-		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
-
-		while (endTime < nextTimeFrame)
-		{
-			// Spin lock
-			endTime = m_timer->GetElapsedTimeInSeconds();
-		}
-
-		double elapsedTime = endTime - startTime;        
-
-		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
-
-		m_nUpdates++;
+		Ship[Index].Update(DESIRED_FRAME_RATE);
 
 		for (int i = 0; i < Ast.size(); i++)
 		{
 			Ast.at(i)->Mover(DESIRED_FRAME_RATE);
-		}
-	}
-
-	void App::Render()
-	{
-		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		Ship[Index].Draw();
-
-		for (int i = 0; i < Ast.size(); i++)
-		{
-			Ast.at(i)->DrawAst();
 		}
 
 		for (auto copy : Ast)
@@ -175,14 +146,12 @@ namespace Engine
 			Asteroide* pAst = dynamic_cast<Asteroide*> (copy);
 			if (pAst)
 			{
-				if (Ship[Index].CollidingSquare(*copy))
+				if (Ship[Index].Colliding(*copy))
 				{
 					int size = pAst->getSize();
 
 					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
 					delete copy;
-
-					Ship[Index].Reiniciar();
 
 					if (size == 0)
 					{
@@ -210,10 +179,41 @@ namespace Engine
 							Ast.push_back(nEnemy);
 						}
 					}
+
+					Ship[Index].Reiniciar();
+
 					break;
 				}
 			}
 
+		}
+
+		double endTime = m_timer->GetElapsedTimeInSeconds();
+		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
+
+		while (endTime < nextTimeFrame)
+		{
+			// Spin lock
+			endTime = m_timer->GetElapsedTimeInSeconds();
+		}
+
+		double elapsedTime = endTime - startTime;        
+
+		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
+
+		m_nUpdates++;
+	}
+
+	void App::Render()
+	{
+		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		Ship[Index].Draw();
+
+		for (int i = 0; i < Ast.size(); i++)
+		{
+			Ast.at(i)->DrawAst();
 		}
 		
 		SDL_GL_SwapWindow(m_mainWindow);

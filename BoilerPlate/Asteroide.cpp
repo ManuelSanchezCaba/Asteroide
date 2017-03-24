@@ -28,6 +28,7 @@ Asteroide::Asteroide(Vector2 pos, int size)
 	setRadioAl(RadioAst);
 	Mn = GenerarMin(PositionAst, RadioAst);
 	Mx = GenerarMax(PositionAst, RadioAst);
+	setPoint();
 }
 
 Asteroide::Asteroide()
@@ -42,6 +43,7 @@ Asteroide::Asteroide()
 	setRadioAl(RadioAst);
 	Mn = GenerarMin(PositionAst, RadioAst);
 	Mx = GenerarMax(PositionAst, RadioAst);
+	setPoint();
 }
 
 Asteroide::~Asteroide()
@@ -59,7 +61,7 @@ void Asteroide::DrawAst()
 
 	DrawT(GL_LINE_LOOP, Point);
 
-	DrawSquare(GL_LINE_LOOP, Mn, Mx, PositionAst);
+	//DrawSquare(GL_LINE_LOOP, Mn, Mx, PositionAst);
 }
 
 void Asteroide::Mover(float deltaTime)
@@ -158,4 +160,15 @@ void Asteroide::setMasa()
 int Asteroide::getSize()
 {
 	return Size;
+}
+
+void Asteroide::setPoint()
+{
+	for (int point = 0; point < 16; ++point)
+	{
+		float valor = static_cast<float> (2.0f * PI * (point / 16.0f));
+		float x = RadioAst * cosf(valor);
+		float y = RadioAst * sinf(valor);
+		Circulo.push_back(Vector2(x, y));
+	}
 }

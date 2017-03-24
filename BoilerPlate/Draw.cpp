@@ -48,12 +48,11 @@ bool draw::Colliding(draw rhs)
 	float x = PosAl.GetX() - rhs.PosAl.GetX();
 	float y = PosAl.GetY() - rhs.PosAl.GetY();
 
-	float radio = (radioAl) + rhs.radioAl;
-	cout << radioAl << endl;
 	float Distancia = x * x + y * y;
 
-	if (Distancia <= radio * radio)
-		return true;
+	float radio = radioAl + rhs.radioAl;
+
+	return radio * radio >= Distancia;
 
 }
 
