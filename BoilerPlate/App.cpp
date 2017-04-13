@@ -102,6 +102,9 @@ namespace Engine
 		case SDL_SCANCODE_D:
 			Ship[Index].MoveRight();
 			break;
+		case SDL_SCANCODE_SPACE:
+			Ship[Index].Disparar();
+			break;
 		case SDL_SCANCODE_P:
 			Index++;
 			if (Index > (Ship.size() - 1))
@@ -135,6 +138,7 @@ namespace Engine
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
 		Ship[Index].Update(DESIRED_FRAME_RATE);
+		bool bulletHit = false;
 
 		for (int i = 0; i < Ast.size(); i++)
 		{
@@ -184,6 +188,49 @@ namespace Engine
 
 					break;
 				}
+
+				for (int i = 0; i < Ship[Index].Balas.size(); i++)
+				{
+					if (Ship[Index].Balas[i]->Colliding(*pAst))
+					{
+						int size = pAst->getSize();
+
+						Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
+						delete copy;
+
+						Ship[Index].EliminarBala(Ship[Index].Balas[i]);
+
+						if (size == 0)
+						{
+							for (int i = 0; i < 2; i++)
+							{
+								Vector2 PosAleatoria;
+								float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+								float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+								PosAleatoria = Vector2(x, y);
+
+								Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
+								Ast.push_back(nEnemy);
+							}
+						}
+						if (size == 1)
+						{
+							for (int i = 0; i < 2; i++)
+							{
+								Vector2 PosAleatoria;
+								float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+								float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
+								PosAleatoria = Vector2(x, y);
+
+								Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
+								Ast.push_back(nEnemy);
+							}
+						}
+						bulletHit = true;
+					}
+				}
+				if (bulletHit == true)
+					break;
 			}
 
 		}

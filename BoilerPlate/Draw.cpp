@@ -51,7 +51,6 @@ bool draw::Colliding(draw rhs)
 	float Distancia = x * x + y * y;
 
 	float radio = radioAl + rhs.radioAl;
-
 	return radio * radio >= Distancia;
 
 }

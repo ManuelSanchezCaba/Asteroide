@@ -16,6 +16,7 @@
 #include "Draw.h"
 #include <random>
 #include <algorithm>
+#include "Bala.h"
 
 namespace Engine
 {

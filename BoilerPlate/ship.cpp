@@ -1,6 +1,8 @@
 #include "ship.h"
 #include <SDL2/SDL_opengl.h>
 #include <cmath>
+#include <algorithm>
+
 #define PI 3.141592653
 
 const float AnguloAjuste = 90.0f;
@@ -18,6 +20,7 @@ ship::ship()
 	Max = GenerarMax(Position, RadioShip);
 	setMasa();
 	setPoint();
+	UsoBala = 0;
 }
 
 ship::ship(const vector<Vector2> points)
@@ -32,6 +35,7 @@ ship::ship(const vector<Vector2> points)
 	setMasa();
 	Time = 0;
 	setPoint();
+	UsoBala = 0;
 }
 
 void ship::Draw()
@@ -49,13 +53,18 @@ void ship::Draw()
 		if (Time >= 100)
 		{
 			Inmune = true;
+			Time = 0;
 			glColor3f(1.0f, 1.0f, 1.0f);
 		}
 		Time++;
 	}
 
 	DrawT(GL_LINE_LOOP, Point);
- 	//DrawSquare(GL_LINE_LOOP, Min, Max, Position);
+ 	
+	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
+
+	for (int i = 0; i < Balas.size(); i++)
+		Balas[i]->Render();
 }
 
 void ship::Trasladar(Vector2 position)
@@ -180,4 +189,32 @@ void ship::Update(float deltatime)
 	Vector2 pos = Position + Velocity;
 
 	Trasladar(pos);
+
+	for (int i = 0; i < Balas.size(); i++)
+	{
+		Balas[i]->Update(deltatime);
+		if (Balas[i]->m_lifeTime >= 240)
+		{
+			EliminarBala(Balas[i]);
+			break;
+		}
+	}
+}
+
+void ship::Disparar()
+{
+	if (UsoBala == 5) return;
+	else if (UsoBala < 5)
+	{
+		Bala* nBullet = new Bala(Position, Velocity, Angulo);
+		Balas.push_back(nBullet);
+		UsoBala++;
+	}
+}
+
+void ship::EliminarBala(Bala* bala)
+{
+	Balas.erase(remove(Balas.begin(), Balas.end(), bala), Balas.end());
+	delete bala;
+	UsoBala--;
 }

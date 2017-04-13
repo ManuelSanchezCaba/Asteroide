@@ -13,6 +13,7 @@ using namespace std;
 #include "Draw.h"
 #include <conio.h>
 #include <time.h>
+#include "Bala.h"
 
 class ship : public draw
 {
@@ -31,6 +32,9 @@ public:
 	Vector2 getPosition();
 	void Reiniciar();
 	void Update(float deltatime);
+	void Disparar();
+	void EliminarBala(Bala* bala);
+	vector<Bala*> Balas;
 
 private: vector<Vector2> Point;
 		 vector<Vector2> Circulo;
@@ -45,6 +49,7 @@ private: vector<Vector2> Point;
 		 Vector2 Max;
 		 bool Inmune;
 		 int Time;
+		 int UsoBala;
 
 protected: Vector2 Position;
 };
