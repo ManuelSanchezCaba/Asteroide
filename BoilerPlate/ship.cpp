@@ -13,7 +13,6 @@ const float Max_Speed = 10.0f;
 ship::ship()
 	: Velocity(0,0)
 	, RadioShip(40.0f)
-	, Index(0)
 {
 	setRadioAl(RadioShip);
 	Min = GenerarMin(Position, RadioShip);
@@ -217,4 +216,40 @@ void ship::EliminarBala(Bala* bala)
 	Balas.erase(remove(Balas.begin(), Balas.end(), bala), Balas.end());
 	delete bala;
 	UsoBala--;
+}
+
+void ship::Vidas(int vidas, int index)
+{
+	if (index != 2)
+	{
+		int Suma = 380;
+		for (int x = 0; x < vidas; x++)
+		{
+			glLoadIdentity();
+
+			glBegin(GL_LINE_LOOP);
+			for (auto point : Point)
+			{
+				glVertex2f(point.GetX() + Suma, point.GetY() + 275);
+			}
+			glEnd();
+			Suma += 70;
+		}
+	}
+	else
+	{
+		int Suma = 400;
+		for (int x = 0; x < vidas; x++)
+		{
+			glLoadIdentity();
+
+			glBegin(GL_LINE_LOOP);
+			for (auto point : Point)
+			{
+				glVertex2f(point.GetX() + Suma, point.GetY() + 295);
+			}
+			glEnd();
+			Suma += 50;
+		}
+	}
 }

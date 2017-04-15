@@ -36,10 +36,10 @@ vector<ship> utilities::explore(char *dir_name)
 					Elementos.push_back(Vector2 (l,m));//nuevo
 					copia.push_back(Vector2(l,m)); //nuevo
 				}
-				cout << "Para el model: " << entry->d_name << " se ha leido " << copia.size() << endl; //nuevo
+				//cout << "Para el model: " << entry->d_name << " se ha leido " << copia.size() << endl; //nuevo
 				Ship.push_back(copia);
 				copia.clear(); //nuevo
-				cout << "" << endl;
+				//cout << "" << endl;
 			}
 			file.close();
 			stat(path.c_str(), &info); //

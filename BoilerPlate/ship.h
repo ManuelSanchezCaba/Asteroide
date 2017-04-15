@@ -34,6 +34,7 @@ public:
 	void Update(float deltatime);
 	void Disparar();
 	void EliminarBala(Bala* bala);
+	void Vidas(int vidas, int index);
 	vector<Bala*> Balas;
 
 private: vector<Vector2> Point;
@@ -42,7 +43,6 @@ private: vector<Vector2> Point;
 		 float Angulo;
 		 float AnguloRadianes;
 		 float Masa;
-		 int Index;
 		 float RadioShip;
 		 float Speed;
 		 Vector2 Min;

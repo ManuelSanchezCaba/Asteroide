@@ -77,6 +77,8 @@ namespace Engine
 		SDL_GLContext						m_context;
 		GameState::State					m_state;
 		Engine::TimeManager*				m_timer;
+		std::vector<ship>				    ShipVidas;
+		int									CantVidas;
 
 		//Asteroide ast = Asteroide(Vector2(rand()%50, rand()%50), 2);
 	};

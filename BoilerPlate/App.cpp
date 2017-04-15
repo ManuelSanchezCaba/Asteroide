@@ -18,6 +18,7 @@ namespace Engine
 		, m_nUpdates(0)
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
+		, CantVidas(3)
 	{
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
@@ -75,6 +76,7 @@ namespace Engine
 
 		Load config;
 		Ship = config.load();
+		ShipVidas = config.load();
 		Index = 0;
 
 		for (int i = 0; i < 3; i++)
@@ -112,7 +114,6 @@ namespace Engine
 				Index = 0;
 			}
 
-			std::cout << Index << std::endl;
 			break;
 		default:			
 			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
@@ -145,6 +146,13 @@ namespace Engine
 			Ast.at(i)->Mover(DESIRED_FRAME_RATE);
 		}
 
+		if (CantVidas == 0)
+		{
+			cout << "GAME OVER!!" << endl;
+			std::system("Pause");
+			exit(EXIT_FAILURE);
+		}
+
 		for (auto copy : Ast)
 		{
 			Asteroide* pAst = dynamic_cast<Asteroide*> (copy);
@@ -152,6 +160,7 @@ namespace Engine
 			{
 				if (Ship[Index].Colliding(*copy))
 				{
+					CantVidas--;
 					int size = pAst->getSize();
 
 					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
@@ -257,6 +266,7 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		Ship[Index].Draw();
+		ShipVidas[Index].Vidas(CantVidas,Index);
 
 		for (int i = 0; i < Ast.size(); i++)
 		{
