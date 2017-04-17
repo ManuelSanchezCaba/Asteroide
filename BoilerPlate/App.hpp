@@ -17,6 +17,7 @@
 #include <random>
 #include <algorithm>
 #include "Bala.h"
+#include "EnemyShip.h"
 
 namespace Engine
 {
@@ -79,6 +80,7 @@ namespace Engine
 		Engine::TimeManager*				m_timer;
 		std::vector<ship>				    ShipVidas;
 		int									CantVidas;
+		EnemyShip							enemy;
 
 		//Asteroide ast = Asteroide(Vector2(rand()%50, rand()%50), 2);
 	};

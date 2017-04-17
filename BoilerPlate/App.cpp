@@ -78,6 +78,7 @@ namespace Engine
 		Ship = config.load();
 		ShipVidas = config.load();
 		Index = 0;
+		enemy = EnemyShip();
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -140,6 +141,8 @@ namespace Engine
 
 		Ship[Index].Update(DESIRED_FRAME_RATE);
 		bool bulletHit = false;
+
+		enemy.Update(DESIRED_FRAME_RATE);
 
 		for (int i = 0; i < Ast.size(); i++)
 		{
@@ -267,6 +270,7 @@ namespace Engine
 
 		Ship[Index].Draw();
 		ShipVidas[Index].Vidas(CantVidas,Index);
+		enemy.Draw();
 
 		for (int i = 0; i < Ast.size(); i++)
 		{

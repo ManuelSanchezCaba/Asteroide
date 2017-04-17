@@ -1,0 +1,115 @@
+#include "EnemyShip.h"
+#include <SDL2/SDL_opengl.h>
+#include "Draw.h"
+#include <cmath>
+#include <algorithm>
+
+#define PI 3.141592653
+
+const float Max_Speed = 10.0f;
+const float Fuerza = 1.25f;
+
+EnemyShip::EnemyShip()
+	: Masa(1.0f)
+	, Position(Vector2(400, 0))
+	, IncreX(-565.0f)
+	, Radio(15.0f)
+{
+	initShip2.push_back(Vector2(-7, 0));
+	initShip2.push_back(Vector2(-7, 11));
+	initShip2.push_back(Vector2(-5, 13));
+	initShip2.push_back(Vector2(-3, 14));
+	initShip2.push_back(Vector2(0, 15));
+	initShip2.push_back(Vector2(3, 14));
+	initShip2.push_back(Vector2(5, 12));
+	initShip2.push_back(Vector2(6, 11));
+	initShip2.push_back(Vector2(6, 0));
+	initShip2.push_back(Vector2(0, 0));
+	initShip2.push_back(Vector2(-7, 0));
+
+	initShip.push_back(Vector2(0, -8));
+	initShip.push_back(Vector2(8, -7));
+	initShip.push_back(Vector2(10, -6));
+	initShip.push_back(Vector2(15, -1));
+	initShip.push_back(Vector2(16, 0));
+	initShip.push_back(Vector2(13, 4));
+	initShip.push_back(Vector2(9, 7));
+	initShip.push_back(Vector2(6, 8));
+	initShip.push_back(Vector2(0, 8));
+	initShip.push_back(Vector2(-6, 8));
+	initShip.push_back(Vector2(-9, 7));
+	initShip.push_back(Vector2(-12, 5));
+	initShip.push_back(Vector2(-13, 4));
+	initShip.push_back(Vector2(-15, 2));
+	initShip.push_back(Vector2(-16, 0));
+	initShip.push_back(Vector2(-13, -4));
+	initShip.push_back(Vector2(-8, -7));
+	initShip.push_back(Vector2(-6, -8));
+	initShip.push_back(Vector2(0, -8));
+	
+	setPoint();
+	setRadioAl(Radio);
+}
+
+void EnemyShip::Draw()
+{
+	glLoadIdentity();
+
+	limite();
+
+	glTranslatef(Position.GetX(), Position.GetY(), 0.0f);
+
+	DrawT(GL_LINE_LOOP, initShip);
+	DrawT(GL_LINE_LOOP, initShip2);
+	DrawT(GL_LINE_LOOP, Circulo);
+}
+
+void EnemyShip::Update(float deltatime)
+{
+	float y = IncreX * (PI / 180);
+	Position = Vector2(IncreX, 300 * sinf(y));
+	IncreX += 0.500f;
+	cout << IncreX << endl;
+}
+
+void EnemyShip::limite()
+{
+	if (Position.GetX() > 570)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetX() < -570)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetY() > 320)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+	else if (Position.GetY() < -320)
+	{
+		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Trasladar(newPos);
+	}
+}
+
+void EnemyShip::Trasladar(Vector2 newPos)
+{
+	Position = static_cast<Vector2> (newPos);
+	IncreX = -570;
+	setPosAl(Position);
+}
+
+void EnemyShip::setPoint()
+{
+	for (int point = 0; point < 16; ++point)
+	{
+		float valor = static_cast<float> (2.0f * PI * (point / 16.0f));
+		float x = Radio * cosf(valor);
+		float y = Radio * sinf(valor);
+		Circulo.push_back(Vector2(x, y));
+	}
+}
