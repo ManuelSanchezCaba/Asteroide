@@ -7,6 +7,7 @@
 #include <vector>
 #include "Vector2.h"
 #include "Draw.h"
+#include "Bala.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ public: EnemyShip();
 		void Update(float deltatime);
 		void Trasladar(Vector2 newPos);
 		void limite();
+		void Disparar();
+		void EliminarBala(Bala* bala);
 		void setPoint();
 
 private: vector<Vector2> initShip;
@@ -24,8 +27,11 @@ private: vector<Vector2> initShip;
 		 Vector2 Position;
 		 vector<Vector2> Circulo;
 		 float Radio;
-		 float Masa;
 		 float IncreX;
+		 int Time;
+		 int Time2;
+		 float Angulo;
+		 vector<Bala*> Balas;
 };
 
 

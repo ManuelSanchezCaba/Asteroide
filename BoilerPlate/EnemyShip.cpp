@@ -10,10 +10,12 @@ const float Max_Speed = 10.0f;
 const float Fuerza = 1.25f;
 
 EnemyShip::EnemyShip()
-	: Masa(1.0f)
-	, Position(Vector2(400, 0))
+	: Position(Vector2(400, 0))
 	, IncreX(-565.0f)
 	, Radio(15.0f)
+	, Time(0)
+	, Time2(0)
+	, Angulo(0)
 {
 	initShip2.push_back(Vector2(-7, 0));
 	initShip2.push_back(Vector2(-7, 11));
@@ -59,17 +61,56 @@ void EnemyShip::Draw()
 
 	glTranslatef(Position.GetX(), Position.GetY(), 0.0f);
 
+	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
+	
 	DrawT(GL_LINE_LOOP, initShip);
 	DrawT(GL_LINE_LOOP, initShip2);
-	DrawT(GL_LINE_LOOP, Circulo);
+	
+	for (int i = 0; i < Balas.size(); i++)
+		Balas[i]->Render();
 }
 
 void EnemyShip::Update(float deltatime)
 {
 	float y = IncreX * (PI / 180);
-	Position = Vector2(IncreX, 300 * sinf(y));
-	IncreX += 0.500f;
-	cout << IncreX << endl;
+	cout << Angulo << endl;
+	if (Time == 200)
+	{
+		if(Time2 == 0)
+			Disparar();
+
+		if (Time2 == 50)
+		{
+			Time = 0;
+			Time2 = 0;
+		}
+		else
+			Time2++;
+	}
+	else
+	{
+		Time++;
+		Position = Vector2(IncreX, 300 * sinf(y));
+		IncreX += 0.500f;
+		if (300 * sinf(y) >= 0)
+		{
+			Angulo -= 0.11f;
+		}
+		else if (300 * sinf(y) < 0)
+		{
+			Angulo += 0.11f;
+		}
+	}
+
+	for (int i = 0; i < Balas.size(); i++)
+	{
+		Balas[i]->Update(deltatime);
+		if (Balas[i]->m_lifeTime >= 50)
+		{
+			EliminarBala(Balas[i]);
+			break;
+		}
+	}
 }
 
 void EnemyShip::limite()
@@ -102,6 +143,19 @@ void EnemyShip::Trasladar(Vector2 newPos)
 	IncreX = -570;
 	setPosAl(Position);
 }
+
+void EnemyShip::Disparar()
+{
+	Bala* nBullet = new Bala(Position, Vector2(30,30), 290.0f);
+	Balas.push_back(nBullet);
+}
+
+void EnemyShip::EliminarBala(Bala* bala)
+{
+	Balas.erase(remove(Balas.begin(), Balas.end(), bala), Balas.end());
+	delete bala;
+}
+
 
 void EnemyShip::setPoint()
 {
