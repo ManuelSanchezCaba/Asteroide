@@ -13,10 +13,9 @@ const float Max_Speed = 10.0f;
 ship::ship()
 	: Velocity(0,0)
 	, RadioShip(40.0f)
+	, Position(Vector2(0,0))
 {
 	setRadioAl(RadioShip);
-	Min = GenerarMin(Position, RadioShip);
-	Max = GenerarMax(Position, RadioShip);
 	setMasa();
 	setPoint();
 	UsoBala = 0;
@@ -25,12 +24,11 @@ ship::ship()
 ship::ship(const vector<Vector2> points)
 {
 	Point = points;
+	Position = Vector2(0, 0);
 	Angulo = 0;
 	AnguloRadianes = (Angulo + AnguloAjuste) * (PI / 180);
 	RadioShip = 40.0f;
 	setRadioAl(RadioShip);
-	Min = GenerarMin(Position, RadioShip);
-	Max = GenerarMax(Position, RadioShip);
 	setMasa();
 	Time = 0;
 	setPoint();
@@ -186,7 +184,6 @@ void ship::Update(float deltatime)
 	Velocity = Vector2(Velocity.GetX() * Drag, Velocity.GetY() * Drag);
 
 	Vector2 pos = Position + Velocity;
-
 	Trasladar(pos);
 
 	for (int i = 0; i < Balas.size(); i++)
