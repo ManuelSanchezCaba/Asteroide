@@ -87,6 +87,8 @@ namespace Engine
 		int									Score;
 		bool								Entro;
 		int									Time;
+		int									RespawnTime;
+		bool								EnterColliding;
 		int									CantAsteroides;
 	};
 }

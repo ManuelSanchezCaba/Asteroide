@@ -27,7 +27,7 @@ EnemyShip::EnemyShip()
 	initShip2.push_back(Vector2(5, 12));
 	initShip2.push_back(Vector2(6, 11));
 	initShip2.push_back(Vector2(6, 0));
-	initShip2.push_back(Vector2(0, 0));
+	initShip2.push_back(Vector2(0, -2));
 	initShip2.push_back(Vector2(-7, 0));
 
 	initShip.push_back(Vector2(0, -8));
@@ -84,7 +84,7 @@ void EnemyShip::Update(float deltatime, Vector2 Position)
 {
 	float y = IncreX * (PI / 180);
 
-	if (Time == 200)
+	if (Time == 350)
 	{
 		if(Time2 == 0 && PermitirDisparar == true)
 			Disparar(Position);

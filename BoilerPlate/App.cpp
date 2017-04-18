@@ -21,6 +21,7 @@ namespace Engine
 		, CantVidas(3)
 		, Entro(false)
 		, Time(0)
+		, RespawnTime(0)
 		, Score(0)
 		, CantAsteroides(1)
 	{
@@ -162,7 +163,18 @@ namespace Engine
 		CheckAst();
 
 		//Check all collisions
-		CheckColliding();
+		if(EnterColliding != true)
+			CheckColliding();
+		else
+		{
+			RespawnTime++;
+
+			if (RespawnTime == 100)
+			{
+				EnterColliding = false;
+				RespawnTime = 0;
+			}
+		}
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
@@ -348,6 +360,7 @@ namespace Engine
 			{
 				if (Ship[Index].Colliding(*copy))
 				{
+					EnterColliding = true;
 					CantVidas--;
 					int size = pAst->getSize();
 
@@ -439,6 +452,7 @@ namespace Engine
 				{
 					if (enemy.Balas[x]->Colliding(Ship[Index]))
 					{
+						EnterColliding = true;
 						CantVidas--;
 						Ship[Index].Reiniciar();
 						enemy.EliminarBala(enemy.Balas[x]);
