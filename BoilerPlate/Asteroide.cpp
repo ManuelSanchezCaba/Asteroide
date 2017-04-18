@@ -26,8 +26,6 @@ Asteroide::Asteroide(Vector2 pos, int size)
 
 	GenerarCirculo();
 	setRadioAl(RadioAst);
-	Mn = GenerarMin(PositionAst, RadioAst);
-	Mx = GenerarMax(PositionAst, RadioAst);
 	setPoint();
 }
 
@@ -41,8 +39,6 @@ Asteroide::Asteroide()
 	PositionAst = PosAL();
 	AnguloRadian = (Angulo + 90.0f) * (PI / 180);
 	setRadioAl(RadioAst);
-	Mn = GenerarMin(PositionAst, RadioAst);
-	Mx = GenerarMax(PositionAst, RadioAst);
 	setPoint();
 }
 
@@ -60,8 +56,6 @@ void Asteroide::DrawAst()
 	glRotated(Angulo, 0.0f, 0.0f, 1.0f);
 
 	DrawT(GL_LINE_LOOP, Point);
-
-	//DrawSquare(GL_LINE_LOOP, Mn, Mx, PositionAst);
 }
 
 void Asteroide::Mover(float deltaTime)

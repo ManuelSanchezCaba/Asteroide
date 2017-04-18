@@ -10,12 +10,13 @@ const float Max_Speed = 10.0f;
 const float Fuerza = 1.25f;
 
 EnemyShip::EnemyShip()
-	: Position(Vector2(400, 0))
+	: PositionEnemy(Vector2(400, 0))
 	, IncreX(-565.0f)
 	, Radio(15.0f)
 	, Time(0)
 	, Time2(0)
 	, Angulo(0)
+	, PermitirDisparar(true)
 {
 	initShip2.push_back(Vector2(-7, 0));
 	initShip2.push_back(Vector2(-7, 11));
@@ -53,13 +54,22 @@ EnemyShip::EnemyShip()
 	setRadioAl(Radio);
 }
 
+EnemyShip::~EnemyShip()
+{
+	for (int x = 0; x < Balas.size(); x++)
+	{
+		EliminarBala(Balas[x]);
+	}
+	PermitirDisparar = false;
+}
+
 void EnemyShip::Draw()
 {
 	glLoadIdentity();
 
 	limite();
 
-	glTranslatef(Position.GetX(), Position.GetY(), 0.0f);
+	glTranslatef(PositionEnemy.GetX(), PositionEnemy.GetY(), 0.0f);
 
 	glRotatef(Angulo, 0.0f, 0.0f, 1.0f);
 	
@@ -70,14 +80,14 @@ void EnemyShip::Draw()
 		Balas[i]->Render();
 }
 
-void EnemyShip::Update(float deltatime)
+void EnemyShip::Update(float deltatime, Vector2 Position)
 {
 	float y = IncreX * (PI / 180);
-	cout << Angulo << endl;
+
 	if (Time == 200)
 	{
-		if(Time2 == 0)
-			Disparar();
+		if(Time2 == 0 && PermitirDisparar == true)
+			Disparar(Position);
 
 		if (Time2 == 50)
 		{
@@ -90,7 +100,7 @@ void EnemyShip::Update(float deltatime)
 	else
 	{
 		Time++;
-		Position = Vector2(IncreX, 300 * sinf(y));
+		PositionEnemy = Vector2(IncreX, 300 * sinf(y));
 		IncreX += 0.500f;
 		if (300 * sinf(y) >= 0)
 		{
@@ -100,12 +110,13 @@ void EnemyShip::Update(float deltatime)
 		{
 			Angulo += 0.11f;
 		}
+		setPosAl(PositionEnemy);
 	}
 
 	for (int i = 0; i < Balas.size(); i++)
 	{
 		Balas[i]->Update(deltatime);
-		if (Balas[i]->m_lifeTime >= 50)
+		if (Balas[i]->m_lifeTime >= 150)
 		{
 			EliminarBala(Balas[i]);
 			break;
@@ -115,38 +126,46 @@ void EnemyShip::Update(float deltatime)
 
 void EnemyShip::limite()
 {
-	if (Position.GetX() > 570)
+	if (PositionEnemy.GetX() > 570)
 	{
-		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Vector2 newPos = Vector2(PositionEnemy.GetX() * -1, PositionEnemy.GetY() * -1);
 		Trasladar(newPos);
 	}
-	else if (Position.GetX() < -570)
+	else if (PositionEnemy.GetX() < -570)
 	{
-		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Vector2 newPos = Vector2(PositionEnemy.GetX() * -1, PositionEnemy.GetY() * -1);
 		Trasladar(newPos);
 	}
-	else if (Position.GetY() > 320)
+	else if (PositionEnemy.GetY() > 320)
 	{
-		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Vector2 newPos = Vector2(PositionEnemy.GetX() * -1, PositionEnemy.GetY() * -1);
 		Trasladar(newPos);
 	}
-	else if (Position.GetY() < -320)
+	else if (PositionEnemy.GetY() < -320)
 	{
-		Vector2 newPos = Vector2(Position.GetX() * -1, Position.GetY() * -1);
+		Vector2 newPos = Vector2(PositionEnemy.GetX() * -1, PositionEnemy.GetY() * -1);
 		Trasladar(newPos);
 	}
 }
 
 void EnemyShip::Trasladar(Vector2 newPos)
 {
-	Position = static_cast<Vector2> (newPos);
+	PositionEnemy = static_cast<Vector2> (newPos);
 	IncreX = -570;
-	setPosAl(Position);
+	setPosAl(PositionEnemy);
 }
 
-void EnemyShip::Disparar()
+void EnemyShip::Disparar(Vector2 Position)
 {
-	Bala* nBullet = new Bala(Position, Vector2(30,30), 290.0f);
+	float valor = (PositionEnemy.GetY() - Position.GetY()) / (PositionEnemy.GetX() - Position.GetX());
+	float anguloA = atan(valor) * (180 / PI);
+	
+	if (PositionEnemy.GetX() < 0 || PositionEnemy.GetX() < 0 && Position.GetX() >= 0 || PositionEnemy.GetX() >= 0 && Position.GetX() >= 0)
+		anguloA = anguloA + 270.0f;
+	else if (PositionEnemy.GetX() >= 0 || PositionEnemy.GetX() >= 0 && Position.GetX() < 0 || PositionEnemy.GetX() < 0 && Position.GetX() < 0)
+		anguloA = anguloA + 90.0f;
+
+	Bala* nBullet = new Bala(PositionEnemy, Vector2(30,30), anguloA);
 	Balas.push_back(nBullet);
 }
 

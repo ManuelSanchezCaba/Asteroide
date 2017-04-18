@@ -36,6 +36,7 @@ public:
 	void EliminarBala(Bala* bala);
 	void Vidas(int vidas, int index);
 	vector<Bala*> Balas;
+	Vector2 Position;
 
 private: vector<Vector2> Point;
 		 vector<Vector2> Circulo;
@@ -50,8 +51,6 @@ private: vector<Vector2> Point;
 		 bool Inmune;
 		 int Time;
 		 int UsoBala;
-
-protected: Vector2 Position;
 };
 
 

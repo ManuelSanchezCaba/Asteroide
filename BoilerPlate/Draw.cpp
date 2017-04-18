@@ -2,9 +2,7 @@
 #include <SDL2/SDL_opengl.h>
 
 draw::draw()
-{
-
-}
+{ }
 
 void draw::DrawT(unsigned int mode, vector<Vector2> Point)
 {

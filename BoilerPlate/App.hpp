@@ -81,8 +81,9 @@ namespace Engine
 		std::vector<ship>				    ShipVidas;
 		int									CantVidas;
 		EnemyShip							enemy;
-
-		//Asteroide ast = Asteroide(Vector2(rand()%50, rand()%50), 2);
+		int									Score;
+		bool								Entro;
+		int									Time;
 	};
 }
 #endif /* GAME_HPP */

@@ -19,6 +19,9 @@ namespace Engine
 		, m_timer(new TimeManager)
 		, m_mainWindow(nullptr)
 		, CantVidas(3)
+		, Entro(false)
+		, Time(0)
+		, Score(0)
 	{
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
@@ -80,7 +83,7 @@ namespace Engine
 		Index = 0;
 		enemy = EnemyShip();
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			Asteroide* newAst = new Asteroide();
 			Ast.push_back(newAst);
@@ -142,7 +145,7 @@ namespace Engine
 		Ship[Index].Update(DESIRED_FRAME_RATE);
 		bool bulletHit = false;
 
-		enemy.Update(DESIRED_FRAME_RATE);
+		enemy.Update(DESIRED_FRAME_RATE, Ship[Index].Position);
 
 		for (int i = 0; i < Ast.size(); i++)
 		{
@@ -152,6 +155,7 @@ namespace Engine
 		if (CantVidas == 0)
 		{
 			cout << "GAME OVER!!" << endl;
+			cout << "Su Score fue de: " << Score << endl;
 			std::system("Pause");
 			exit(EXIT_FAILURE);
 		}
@@ -165,10 +169,10 @@ namespace Engine
 				{
 					CantVidas--;
 					int size = pAst->getSize();
-
+				
 					Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
 					delete copy;
-
+				
 					if (size == 0)
 					{
 						for (int i = 0; i < 2; i++)
@@ -177,7 +181,7 @@ namespace Engine
 							float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 							float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 							PosAleatoria = Vector2(x, y);
-
+				
 							Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
 							Ast.push_back(nEnemy);
 						}
@@ -190,59 +194,95 @@ namespace Engine
 							float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 							float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 							PosAleatoria = Vector2(x, y);
-
+				
 							Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
 							Ast.push_back(nEnemy);
 						}
 					}
-
+				
 					Ship[Index].Reiniciar();
-
+				
 					break;
 				}
-
+				
 				for (int i = 0; i < Ship[Index].Balas.size(); i++)
 				{
 					if (Ship[Index].Balas[i]->Colliding(*pAst))
 					{
 						int size = pAst->getSize();
-
+				
 						Ast.erase(remove(Ast.begin(), Ast.end(), copy), Ast.end());
 						delete copy;
-
+				
 						Ship[Index].EliminarBala(Ship[Index].Balas[i]);
-
+				
 						if (size == 0)
+
 						{
+							Score += 50;
 							for (int i = 0; i < 2; i++)
 							{
 								Vector2 PosAleatoria;
 								float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 								float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 								PosAleatoria = Vector2(x, y);
-
+				
 								Asteroide* nEnemy = new Asteroide(PosAleatoria, 1);
 								Ast.push_back(nEnemy);
 							}
 						}
 						if (size == 1)
 						{
+							Score += 100;
 							for (int i = 0; i < 2; i++)
 							{
 								Vector2 PosAleatoria;
 								float x = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 								float y = static_cast<float> (-500 + (500 + 500) * (rand() / static_cast<float> (RAND_MAX)));
 								PosAleatoria = Vector2(x, y);
-
+				
 								Asteroide* nEnemy = new Asteroide(PosAleatoria, 2);
 								Ast.push_back(nEnemy);
 							}
 						}
+						if (size == 2)
+							Score += 200;
+
 						bulletHit = true;
 					}
 				}
 				if (bulletHit == true)
 					break;
+				for (int x = 0; x < enemy.Balas.size(); x++)
+				{
+					if (enemy.Balas[x]->Colliding(Ship[Index]))
+					{
+						CantVidas--;
+						Ship[Index].Reiniciar();
+						enemy.EliminarBala(enemy.Balas[x]);
+						break;
+					}
+				}
+
+				for (int x = 0; x < Ship[Index].Balas.size(); x++)
+				{
+					if (Ship[Index].Balas[x]->Colliding(enemy))
+					{
+						Score += 300;
+						enemy.~EnemyShip();
+						Ship[Index].EliminarBala(Ship[Index].Balas[x]);
+						Entro = true;
+					}
+				}
+
+				if (Entro == true)
+				{
+					if (Time == 1000)
+					{
+						enemy = EnemyShip();
+					}
+					Time++;
+				}
 			}
 
 		}
