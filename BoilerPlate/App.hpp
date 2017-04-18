@@ -64,6 +64,9 @@ namespace Engine
 		void OnExit							( ) override;
 		void OnKeyDown						( SDL_KeyboardEvent keyBoardEvent ) override;
 		void OnKeyUp						( SDL_KeyboardEvent keyBoardEvent ) override;
+		void CheckColliding					( );
+		void CheckLive						( );
+		void CheckAst						( );
 
 
 		/* =============================================================
@@ -84,6 +87,7 @@ namespace Engine
 		int									Score;
 		bool								Entro;
 		int									Time;
+		int									CantAsteroides;
 	};
 }
 #endif /* GAME_HPP */
