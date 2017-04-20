@@ -459,7 +459,7 @@ namespace Engine
 						break;
 					}
 				}
-
+				
 				for (int x = 0; x < Ship[Index].Balas.size(); x++)
 				{
 					if (Ship[Index].Balas[x]->Colliding(enemy))

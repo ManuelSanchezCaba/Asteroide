@@ -56,10 +56,21 @@ EnemyShip::EnemyShip()
 
 EnemyShip::~EnemyShip()
 {
+	for (int x = 0; x < initShip.size(); x++)
+	{
+		initShip.clear();
+	}
+
+	for (int x = 0; x < initShip2.size(); x++)
+	{
+		initShip2.clear();
+	}
+
 	for (int x = 0; x < Balas.size(); x++)
 	{
 		EliminarBala(Balas[x]);
 	}
+
 	PermitirDisparar = false;
 }
 
@@ -75,7 +86,7 @@ void EnemyShip::Draw()
 	
 	DrawT(GL_LINE_LOOP, initShip);
 	DrawT(GL_LINE_LOOP, initShip2);
-	
+
 	for (int i = 0; i < Balas.size(); i++)
 		Balas[i]->Render();
 }
